@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Quick Loan Application</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&amp;family=IBM+Plex+Sans:wght@400;600;700&amp;family=JetBrains+Mono:wght@400&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "status-error": "#D32F2F",
+                      "on-tertiary-container": "#cf9000",
+                      "secondary": "#006d40",
+                      "status-success": "#008751",
+                      "surface-variant": "#e2e2e7",
+                      "on-secondary-fixed-variant": "#00522f",
+                      "surface-container-lowest": "#ffffff",
+                      "on-tertiary-fixed-variant": "#604100",
+                      "on-tertiary-fixed": "#281900",
+                      "on-secondary": "#ffffff",
+                      "inverse-on-surface": "#f1f0f5",
+                      "surface-tint": "#3a5f94",
+                      "on-primary": "#ffffff",
+                      "tertiary-container": "#472f00",
+                      "background": "#f9f9fe",
+                      "on-surface": "#1a1c1f",
+                      "inverse-primary": "#a7c8ff",
+                      "primary": "#001e40",
+                      "tertiary": "#2c1b00",
+                      "error-container": "#ffdad6",
+                      "surface-dim": "#dad9de",
+                      "status-warning": "#F2A900",
+                      "outline-variant": "#c3c6d1",
+                      "secondary-container": "#8af5b4",
+                      "on-error-container": "#93000a",
+                      "on-primary-fixed-variant": "#1f477b",
+                      "surface": "#f9f9fe",
+                      "on-primary-fixed": "#001b3c",
+                      "surface-bright": "#f9f9fe",
+                      "surface-field": "#FFFFFF",
+                      "inverse-surface": "#2f3034",
+                      "surface-container-low": "#f4f3f8",
+                      "outline": "#737780",
+                      "primary-container": "#003366",
+                      "secondary-fixed-dim": "#70db9d",
+                      "on-surface-variant": "#43474f",
+                      "on-secondary-container": "#007243",
+                      "tertiary-fixed": "#ffdead",
+                      "surface-admin": "#F8FAFC",
+                      "on-secondary-fixed": "#002110",
+                      "surface-container": "#eeedf2",
+                      "status-info": "#0288D1",
+                      "primary-fixed": "#d5e3ff",
+                      "secondary-fixed": "#8df8b7",
+                      "on-error": "#ffffff",
+                      "tertiary-fixed-dim": "#ffba3b",
+                      "surface-container-highest": "#e2e2e7",
+                      "on-background": "#1a1c1f",
+                      "on-tertiary": "#ffffff",
+                      "primary-fixed-dim": "#a7c8ff",
+                      "surface-container-high": "#e8e8ed",
+                      "error": "#ba1a1a",
+                      "on-primary-container": "#799dd6"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "gutter-sm": "16px",
+                      "unit": "4px",
+                      "margin-mobile": "16px",
+                      "max-width-admin": "1440px",
+                      "gutter-lg": "24px",
+                      "margin-desktop": "32px"
+              },
+              "fontFamily": {
+                      "data-mono": [
+                              "JetBrains Mono"
+                      ],
+                      "body-md": [
+                              "Inter"
+                      ],
+                      "headline-md": [
+                              "IBM Plex Sans"
+                      ],
+                      "headline-lg-mobile": [
+                              "IBM Plex Sans"
+                      ],
+                      "headline-lg": [
+                              "IBM Plex Sans"
+                      ],
+                      "body-lg": [
+                              "Inter"
+                      ],
+                      "body-sm": [
+                              "Inter"
+                      ],
+                      "label-caps": [
+                              "Inter"
+                      ]
+              },
+              "fontSize": {
+                      "data-mono": [
+                              "13px",
+                              {
+                                      "lineHeight": "18px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-md": [
+                              "16px",
+                              {
+                                      "lineHeight": "24px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "headline-md": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg-mobile": [
+                              "24px",
+                              {
+                                      "lineHeight": "32px",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "headline-lg": [
+                              "32px",
+                              {
+                                      "lineHeight": "40px",
+                                      "letterSpacing": "-0.02em",
+                                      "fontWeight": "600"
+                              }
+                      ],
+                      "body-lg": [
+                              "18px",
+                              {
+                                      "lineHeight": "28px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "body-sm": [
+                              "14px",
+                              {
+                                      "lineHeight": "20px",
+                                      "fontWeight": "400"
+                              }
+                      ],
+                      "label-caps": [
+                              "12px",
+                              {
+                                      "lineHeight": "16px",
+                                      "letterSpacing": "0.05em",
+                                      "fontWeight": "700"
+                              }
+                      ]
+              }
+      },
+          },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings:
+            'FILL' 0,
+            'wght' 400,
+            'GRAD' 0,
+            'opsz' 24
+        }
+        .material-symbols-outlined[data-weight="fill"] {
+            font-variation-settings: 'FILL' 1;
+        }
+        /* Custom scrollbar for web */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f4f3f8;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #c3c6d1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #737780;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md min-h-screen flex flex-col">
+<!-- Top Navigation Shell (Hidden on transaction flow per JSON logic, but we need a header for the logo & draft status. Creating a specific header for this flow) -->
+<header class="bg-surface border-b-1.5 border-outline-variant flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop h-16 sticky top-0 z-40">
+<div class="flex items-center gap-4">
+<button aria-label="Go Back" class="p-2 hover:bg-surface-container-low rounded-full transition-colors">
+<span class="material-symbols-outlined text-primary">arrow_back</span>
+</button>
+<div class="flex items-center gap-3">
+<img alt="Centenary Bank Logo" class="h-8 w-8 object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDiaKZj154Jfvdh0VT1A8F3dKzOKpYlVSRBgXGGUv_PWD4X3Yv43D5FT27E2Rg45EvTCTvIohBX6SgcasXSNcCFIZo4oiR9ySXrD6akEqF7XLTyO9im0LH-kbthnA-p-9oDWCQtpsrjyG0qjzzQxBC5Q_UywDgVQPhY6ZxqzqAbZrBEE6_vN6AsTCoZ_JKay4riJVRMD3-zdHO9odzBGGFz_h2BxERfD-V5ALH7ImXmzxAt2fOqamwR"/>
+<span class="font-headline-lg-mobile text-headline-lg-mobile font-bold text-primary hidden md:inline-block">Quick Loan</span>
+</div>
+</div>
+<div class="flex items-center gap-2 px-3 py-1 bg-surface-container-low rounded-full border border-outline-variant">
+<span class="material-symbols-outlined text-status-success text-[18px]">cloud_done</span>
+<span class="font-label-caps text-label-caps text-on-surface-variant">Draft Saved</span>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow w-full max-w-3xl mx-auto px-margin-mobile py-6 md:py-10 flex flex-col gap-8">
+<!-- Header Section -->
+<div>
+<h1 class="font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary mb-2">New Quick Loan Application</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Complete the steps below to apply. Progress is saved automatically.</p>
+</div>
+<!-- Stepper -->
+<div class="flex items-center justify-between relative mb-4">
+<div class="absolute left-0 top-1/2 -translate-y-1/2 w-full h-0.5 bg-surface-container-highest z-0"></div>
+<div class="absolute left-0 top-1/2 -translate-y-1/2 w-1/3 h-0.5 bg-primary z-0 transition-all duration-300" id="progress-bar"></div>
+<div class="relative z-10 flex flex-col items-center gap-2 bg-surface px-2">
+<div class="w-8 h-8 rounded-full bg-primary text-on-primary flex items-center justify-center font-bold text-sm shadow-sm ring-4 ring-surface">1</div>
+<span class="font-label-caps text-label-caps text-primary hidden md:block">Personal</span>
+</div>
+<div class="relative z-10 flex flex-col items-center gap-2 bg-surface px-2">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center font-bold text-sm shadow-sm ring-4 ring-surface">2</div>
+<span class="font-label-caps text-label-caps text-on-surface-variant hidden md:block">Business</span>
+</div>
+<div class="relative z-10 flex flex-col items-center gap-2 bg-surface px-2">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest text-on-surface-variant flex items-center justify-center font-bold text-sm shadow-sm ring-4 ring-surface">3</div>
+<span class="font-label-caps text-label-caps text-on-surface-variant hidden md:block">Review</span>
+</div>
+</div>
+<!-- Form Canvas (Bento-style Cards) -->
+<div class="bg-surface-field border border-outline-variant rounded-xl shadow-sm p-margin-mobile md:p-gutter-lg flex flex-col gap-6">
+<div class="border-b border-outline-variant pb-4 mb-2">
+<h2 class="font-headline-md text-headline-md text-primary">Step 1: Personal Details</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Verify applicant identity information.</p>
+</div>
+<!-- Form Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-x-gutter-lg gap-y-6">
+<!-- Field: Full Name -->
+<div class="flex flex-col gap-1 w-full md:col-span-2">
+<label class="font-label-caps text-label-caps text-on-surface-variant" for="fullName">Full Legal Name</label>
+<div class="relative">
+<input class="w-full h-12 px-4 py-3 bg-surface border-1.5 border-outline-variant rounded-lg font-body-md text-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary transition-colors outline-none" id="fullName" placeholder="e.g. John Doe" type="text" value="John M. Doe"/>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-status-success" data-weight="fill">check_circle</span>
+</div>
+</div>
+<!-- Field: ID Number -->
+<div class="flex flex-col gap-1 w-full">
+<label class="font-label-caps text-label-caps text-on-surface-variant" for="idNumber">National ID Number</label>
+<div class="relative">
+<input class="w-full h-12 px-4 py-3 bg-surface border-1.5 border-outline-variant rounded-lg font-body-md text-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary transition-colors outline-none" id="idNumber" placeholder="XXXX-XXXX-XXXX" type="text"/>
+</div>
+</div>
+<!-- Field: Phone -->
+<div class="flex flex-col gap-1 w-full">
+<label class="font-label-caps text-label-caps text-on-surface-variant" for="phone">Primary Phone</label>
+<div class="relative flex">
+<div class="flex items-center justify-center px-3 bg-surface-container-low border-y-1.5 border-l-1.5 border-outline-variant rounded-l-lg text-on-surface-variant font-body-md border-r-0">
+                            +265
+                        </div>
+<input class="w-full h-12 px-3 py-3 bg-surface border-1.5 border-outline-variant rounded-r-lg font-body-md text-body-md text-on-surface focus:border-primary focus:ring-1 focus:ring-primary transition-colors outline-none" id="phone" placeholder="999 000 000" type="tel"/>
+</div>
+</div>
+</div>
+<!-- Attachments Section (Glassmorphism/High-utility feel) -->
+<div class="mt-4 p-4 bg-surface-admin rounded-lg border border-outline-variant relative overflow-hidden">
+<!-- Decorative subtle background -->
+<div class="absolute -right-10 -top-10 w-32 h-32 bg-primary/5 rounded-full blur-2xl pointer-events-none"></div>
+<h3 class="font-headline-md text-[18px] text-primary mb-1 relative z-10 flex items-center gap-2">
+<span class="material-symbols-outlined">photo_camera</span>
+                    Document Captures
+                </h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-4 relative z-10">Please attach a clear photo of the National ID.</p>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 relative z-10">
+<!-- Add New Attachment Button -->
+<button class="flex flex-col items-center justify-center p-4 border-2 border-dashed border-primary/30 rounded-lg bg-surface hover:bg-primary-fixed/10 transition-colors h-24 gap-1 group">
+<span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">add_a_photo</span>
+<span class="font-label-caps text-[10px] text-primary">Add ID Front</span>
+</button>
+<button class="flex flex-col items-center justify-center p-4 border-2 border-dashed border-primary/30 rounded-lg bg-surface hover:bg-primary-fixed/10 transition-colors h-24 gap-1 group">
+<span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">add_a_photo</span>
+<span class="font-label-caps text-[10px] text-primary">Add ID Back</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Action Bar -->
+<div class="flex items-center justify-between pt-4 pb-12 md:pb-4">
+<button class="px-6 py-3 rounded-full border border-primary text-primary font-label-caps text-label-caps hover:bg-surface-container-low transition-colors">
+                Save for Later
+            </button>
+<button class="px-6 py-3 rounded-full bg-primary text-on-primary font-label-caps text-label-caps hover:bg-primary/90 transition-colors shadow-sm flex items-center gap-2">
+                Next: Business Info
+                <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+</main>
+</body></html>

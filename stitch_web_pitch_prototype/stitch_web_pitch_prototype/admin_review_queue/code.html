@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Loan Review Queue - Admin Cockpit</title>
+<!-- Google Fonts & Material Icons -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600;700&amp;family=Inter:wght@400;600;700&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "status-error": "#D32F2F",
+                    "on-tertiary-container": "#cf9000",
+                    "secondary": "#006d40",
+                    "status-success": "#008751",
+                    "surface-variant": "#e2e2e7",
+                    "on-secondary-fixed-variant": "#00522f",
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary-fixed-variant": "#604100",
+                    "on-tertiary-fixed": "#281900",
+                    "on-secondary": "#ffffff",
+                    "inverse-on-surface": "#f1f0f5",
+                    "surface-tint": "#3a5f94",
+                    "on-primary": "#ffffff",
+                    "tertiary-container": "#472f00",
+                    "background": "#f9f9fe",
+                    "on-surface": "#1a1c1f",
+                    "inverse-primary": "#a7c8ff",
+                    "primary": "#001e40",
+                    "tertiary": "#2c1b00",
+                    "error-container": "#ffdad6",
+                    "surface-dim": "#dad9de",
+                    "status-warning": "#F2A900",
+                    "outline-variant": "#c3c6d1",
+                    "secondary-container": "#8af5b4",
+                    "on-error-container": "#93000a",
+                    "on-primary-fixed-variant": "#1f477b",
+                    "surface": "#f9f9fe",
+                    "on-primary-fixed": "#001b3c",
+                    "surface-bright": "#f9f9fe",
+                    "surface-field": "#FFFFFF",
+                    "inverse-surface": "#2f3034",
+                    "surface-container-low": "#f4f3f8",
+                    "outline": "#737780",
+                    "primary-container": "#003366",
+                    "secondary-fixed-dim": "#70db9d",
+                    "on-surface-variant": "#43474f",
+                    "on-secondary-container": "#007243",
+                    "tertiary-fixed": "#ffdead",
+                    "surface-admin": "#F8FAFC",
+                    "on-secondary-fixed": "#002110",
+                    "surface-container": "#eeedf2",
+                    "status-info": "#0288D1",
+                    "primary-fixed": "#d5e3ff",
+                    "secondary-fixed": "#8df8b7",
+                    "on-error": "#ffffff",
+                    "tertiary-fixed-dim": "#ffba3b",
+                    "surface-container-highest": "#e2e2e7",
+                    "on-background": "#1a1c1f",
+                    "on-tertiary": "#ffffff",
+                    "primary-fixed-dim": "#a7c8ff",
+                    "surface-container-high": "#e8e8ed",
+                    "error": "#ba1a1a",
+                    "on-primary-container": "#799dd6"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "gutter-sm": "16px",
+                    "unit": "4px",
+                    "margin-mobile": "16px",
+                    "max-width-admin": "1440px",
+                    "gutter-lg": "24px",
+                    "margin-desktop": "32px"
+            },
+            "fontFamily": {
+                    "data-mono": ["JetBrains Mono"],
+                    "body-md": ["Inter"],
+                    "headline-md": ["IBM Plex Sans"],
+                    "headline-lg-mobile": ["IBM Plex Sans"],
+                    "headline-lg": ["IBM Plex Sans"],
+                    "body-lg": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "label-caps": ["Inter"]
+            },
+            "fontSize": {
+                    "data-mono": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "label-caps": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "700"}]
+            }
+          },
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex">
+<!-- SideNavBar -->
+<nav class="bg-surface-admin dark:bg-inverse-surface fixed left-0 top-0 h-full w-[280px] bg-surface-admin border-r border-outline-variant flat no shadows flex flex-col h-full py-6 z-20 hidden md:flex">
+<div class="px-6 mb-8 flex items-center gap-3">
+<img alt="Centenary Bank Logo" class="w-10 h-10 object-contain rounded-DEFAULT" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDiaKZj154Jfvdh0VT1A8F3dKzOKpYlVSRBgXGGUv_PWD4X3Yv43D5FT27E2Rg45EvTCTvIohBX6SgcasXSNcCFIZo4oiR9ySXrD6akEqF7XLTyO9im0LH-kbthnA-p-9oDWCQtpsrjyG0qjzzQxBC5Q_UywDgVQPhY6ZxqzqAbZrBEE6_vN6AsTCoZ_JKay4riJVRMD3-zdHO9odzBGGFz_h2BxERfD-V5ALH7ImXmzxAt2fOqamwR"/>
+<div>
+<h1 class="text-headline-md font-headline-md font-black text-primary dark:text-inverse-primary">Admin Cockpit</h1>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Centenary Bank</p>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto">
+<ul class="space-y-1">
+<li>
+<a class="text-on-surface-variant flex items-center gap-3 px-6 py-3 hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="text-label-caps font-label-caps">Customers</span>
+</a>
+</li>
+<li>
+<a class="text-on-surface-variant flex items-center gap-3 px-6 py-3 hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+<span class="text-label-caps font-label-caps">Wallets</span>
+</a>
+</li>
+<li>
+<a class="text-on-surface-variant flex items-center gap-3 px-6 py-3 hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">receipt_long</span>
+<span class="text-label-caps font-label-caps">Transactions</span>
+</a>
+</li>
+<li>
+<a class="text-primary font-bold border-r-4 border-primary bg-primary-fixed/20 flex items-center gap-3 px-6 py-3 opacity-80" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">payments</span>
+<span class="text-label-caps font-label-caps">Loans</span>
+</a>
+</li>
+<li>
+<a class="text-on-surface-variant flex items-center gap-3 px-6 py-3 hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">assessment</span>
+<span class="text-label-caps font-label-caps">Reports</span>
+</a>
+</li>
+</ul>
+</div>
+<div class="mt-auto">
+<ul class="space-y-1">
+<li>
+<a class="text-on-surface-variant flex items-center gap-3 px-6 py-3 hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-label-caps font-label-caps">Settings</span>
+</a>
+</li>
+<li>
+<a class="text-on-surface-variant flex items-center gap-3 px-6 py-3 hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined">help</span>
+<span class="text-label-caps font-label-caps">Support</span>
+</a>
+</li>
+</ul>
+</div>
+</nav>
+<!-- Main Content Area -->
+<div class="flex-1 md:ml-[280px] flex flex-col min-h-screen">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-inverse-surface docked full-width top-0 sticky bg-surface border-b border-outline-variant shadow-sm flex justify-between items-center w-full px-margin-desktop h-16 max-w-[calc(1440px-280px)] z-10 hidden md:flex">
+<div class="flex items-center gap-4 w-1/3">
+<span class="text-headline-md font-headline-md font-bold text-primary dark:text-inverse-primary hidden md:block">Centenary Admin</span>
+<div class="relative w-full max-w-sm">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full bg-surface-container-low text-body-md font-body-md pl-10 pr-4 py-2 rounded-DEFAULT border-none focus:ring-1 focus:ring-primary outline-none" placeholder="Search loans, applicants..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-all duration-200 rounded-full hover:bg-surface-container-low">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-primary transition-all duration-200 rounded-full hover:bg-surface-container-low">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-primary transition-all duration-200 rounded-full hover:bg-surface-container-low">
+<span class="material-symbols-outlined">apps</span>
+</button>
+<img alt="Administrator" class="w-8 h-8 rounded-full object-cover ml-2 border border-outline-variant" data-alt="A small, professional headshot of an administrator in a corporate banking setting. Bright, clear lighting, light mode aesthetic, corporate modern vibe. The subject is wearing a dark blue suit." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAB9YUaY6uErWurrdnVM4S1HGUsx3lvv1lFKkMV8U75FqecyoWydhOBQNRMv8zM9tFSy5fjm1XluXEiZ5IqW_p90KbCiahDEFxTExHiyIAsAS25qOHRzMhmBDZYO9ekYMVsRTLzi-Ve9pucd5DJVk4aoUNi9duKkGmB2GfqoGbb6FtRLH46fIx4mEcLLGNgtn0HFshhQJomuPP6dIHLKip191fpV0HV84EzCPWqNcdhbTbz1B-ni4Rv"/>
+</div>
+</header>
+<!-- Main Workspace -->
+<main class="flex-1 p-margin-mobile md:p-margin-desktop max-w-[calc(1440px-280px)] w-full mx-auto">
+<!-- Page Header & Actions -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+<div>
+<h2 class="text-headline-lg font-headline-lg text-on-surface mb-1">Loan Review Queue</h2>
+<p class="text-body-md font-body-md text-on-surface-variant">Pending applications requiring back-office approval.</p>
+</div>
+<div class="flex items-center gap-3 w-full md:w-auto">
+<!-- Filters -->
+<div class="flex gap-2 bg-surface-container-lowest p-1 rounded-DEFAULT border border-outline-variant">
+<button class="px-3 py-1.5 text-body-sm font-body-sm bg-surface-container-high rounded-sm text-on-surface">All</button>
+<button class="px-3 py-1.5 text-body-sm font-body-sm text-on-surface-variant hover:bg-surface-container-low rounded-sm flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-status-success"></span> Green
+                        </button>
+<button class="px-3 py-1.5 text-body-sm font-body-sm text-on-surface-variant hover:bg-surface-container-low rounded-sm flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-status-warning"></span> Amber
+                        </button>
+<button class="px-3 py-1.5 text-body-sm font-body-sm text-on-surface-variant hover:bg-surface-container-low rounded-sm flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-status-error"></span> Red
+                        </button>
+</div>
+<select class="bg-surface-container-lowest text-body-sm font-body-sm border border-outline-variant rounded-DEFAULT px-3 py-2 outline-none focus:ring-1 focus:ring-primary">
+<option>All Regions</option>
+<option>Lilongwe</option>
+<option>Blantyre</option>
+<option>Mzuzu</option>
+</select>
+</div>
+</div>
+<!-- Data Table Card -->
+<div class="bg-surface-container-lowest rounded-DEFAULT border border-outline-variant overflow-hidden shadow-sm">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low border-b border-outline-variant">
+<th class="py-3 px-4 text-label-caps font-label-caps text-on-surface-variant font-semibold">Applicant</th>
+<th class="py-3 px-4 text-label-caps font-label-caps text-on-surface-variant font-semibold">Product</th>
+<th class="py-3 px-4 text-label-caps font-label-caps text-on-surface-variant font-semibold">Score (RAG)</th>
+<th class="py-3 px-4 text-label-caps font-label-caps text-on-surface-variant font-semibold">Officer</th>
+<th class="py-3 px-4 text-label-caps font-label-caps text-on-surface-variant font-semibold">Date Applied</th>
+<th class="py-3 px-4 text-label-caps font-label-caps text-on-surface-variant font-semibold text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="text-body-sm font-body-sm">
+<!-- Row 1: Green -->
+<tr class="border-b border-outline-variant hover:bg-surface-container-lowest transition-colors h-[48px]">
+<td class="py-2 px-4">
+<div class="font-semibold text-on-surface">Chikondi Phiri</div>
+<div class="text-on-surface-variant text-[12px]">ID: MAL-9823</div>
+</td>
+<td class="py-2 px-4 text-on-surface">Agri-Grow Micro</td>
+<td class="py-2 px-4">
+<div class="flex items-center gap-2">
+<span class="text-data-mono font-data-mono text-status-success font-bold text-[14px]">845</span>
+<span class="px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wide uppercase bg-status-success/10 text-status-success border border-status-success/20">STP Approve</span>
+</div>
+</td>
+<td class="py-2 px-4 text-on-surface-variant">J. Banda</td>
+<td class="py-2 px-4 text-data-mono font-data-mono text-on-surface-variant">24-Oct-2023</td>
+<td class="py-2 px-4 text-right">
+<button class="bg-primary text-on-primary px-3 py-1 rounded-DEFAULT hover:bg-primary-container transition-colors text-label-caps font-label-caps">Review</button>
+</td>
+</tr>
+<!-- Row 2: Amber -->
+<tr class="border-b border-outline-variant bg-surface-admin hover:bg-surface-container-lowest transition-colors h-[48px]">
+<td class="py-2 px-4">
+<div class="font-semibold text-on-surface">Blessings Kaphiri</div>
+<div class="text-on-surface-variant text-[12px]">ID: MAL-7741</div>
+</td>
+<td class="py-2 px-4 text-on-surface">SME Asset Finance</td>
+<td class="py-2 px-4">
+<div class="flex items-center gap-2">
+<span class="text-data-mono font-data-mono text-status-warning font-bold text-[14px]">610</span>
+<span class="px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wide uppercase bg-status-warning/10 text-status-warning border border-status-warning/20">Manual Rev</span>
+</div>
+</td>
+<td class="py-2 px-4 text-on-surface-variant">M. Nkhoma</td>
+<td class="py-2 px-4 text-data-mono font-data-mono text-on-surface-variant">23-Oct-2023</td>
+<td class="py-2 px-4 text-right">
+<button class="bg-primary text-on-primary px-3 py-1 rounded-DEFAULT hover:bg-primary-container transition-colors text-label-caps font-label-caps">Review</button>
+</td>
+</tr>
+<!-- Row 3: Red -->
+<tr class="border-b border-outline-variant hover:bg-surface-container-lowest transition-colors h-[48px]">
+<td class="py-2 px-4">
+<div class="font-semibold text-on-surface">Fatsani Moyo</div>
+<div class="text-on-surface-variant text-[12px]">ID: MAL-3390</div>
+</td>
+<td class="py-2 px-4 text-on-surface">Retail Personal Loan</td>
+<td class="py-2 px-4">
+<div class="flex items-center gap-2">
+<span class="text-data-mono font-data-mono text-status-error font-bold text-[14px]">425</span>
+<span class="px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wide uppercase bg-status-error/10 text-status-error border border-status-error/20">High Risk</span>
+</div>
+</td>
+<td class="py-2 px-4 text-on-surface-variant">T. Chinguwo</td>
+<td class="py-2 px-4 text-data-mono font-data-mono text-on-surface-variant">23-Oct-2023</td>
+<td class="py-2 px-4 text-right">
+<button class="bg-primary text-on-primary px-3 py-1 rounded-DEFAULT hover:bg-primary-container transition-colors text-label-caps font-label-caps">Review</button>
+</td>
+</tr>
+<!-- Row 4: Green -->
+<tr class="border-b border-outline-variant bg-surface-admin hover:bg-surface-container-lowest transition-colors h-[48px]">
+<td class="py-2 px-4">
+<div class="font-semibold text-on-surface">Yamikani Mwale</div>
+<div class="text-on-surface-variant text-[12px]">ID: MAL-1128</div>
+</td>
+<td class="py-2 px-4 text-on-surface">Agri-Grow Macro</td>
+<td class="py-2 px-4">
+<div class="flex items-center gap-2">
+<span class="text-data-mono font-data-mono text-status-success font-bold text-[14px]">890</span>
+<span class="px-2 py-0.5 rounded-full text-[10px] font-bold tracking-wide uppercase bg-status-success/10 text-status-success border border-status-success/20">STP Approve</span>
+</div>
+</td>
+<td class="py-2 px-4 text-on-surface-variant">J. Banda</td>
+<td class="py-2 px-4 text-data-mono font-data-mono text-on-surface-variant">22-Oct-2023</td>
+<td class="py-2 px-4 text-right">
+<button class="bg-primary text-on-primary px-3 py-1 rounded-DEFAULT hover:bg-primary-container transition-colors text-label-caps font-label-caps">Review</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="px-4 py-3 border-t border-outline-variant flex items-center justify-between bg-surface">
+<span class="text-body-sm font-body-sm text-on-surface-variant">Showing 1 to 4 of 42 entries</span>
+<div class="flex gap-1">
+<button class="px-2 py-1 text-on-surface-variant hover:bg-surface-container-low rounded-DEFAULT disabled:opacity-50" disabled="">Prev</button>
+<button class="px-2 py-1 bg-primary text-on-primary rounded-DEFAULT text-body-sm font-body-sm">1</button>
+<button class="px-2 py-1 text-on-surface-variant hover:bg-surface-container-low rounded-DEFAULT text-body-sm font-body-sm">2</button>
+<button class="px-2 py-1 text-on-surface-variant hover:bg-surface-container-low rounded-DEFAULT text-body-sm font-body-sm">3</button>
+<button class="px-2 py-1 text-on-surface-variant hover:bg-surface-container-low rounded-DEFAULT">Next</button>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

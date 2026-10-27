@@ -1,0 +1,128 @@
+Web/Admin Platform
+
+Core banking / customer
+
+Customer, account, phone and receipt management; KYC records
+Wallets: balances, charges, settings, transactions + detail lines, flag-switch audit log
+Bank-to-wallet transfers, cardless withdrawals (with settings), device registry
+Transaction limits, transaction profiles, charge configuration
+Teller transactions (23 operator screens under views/teller)
+
+Bill payments: ESCOM (power), MASM, Lilongwe City Council, LLWB, NRWB (water boards), NCHE, Multichoice/DStv
+MRA (Malawi Revenue Authority) tax payments — plus revenue wallet top-up and invoice payment
+Airtime purchase, school fees, hospital payments, church contributions, donations, property collections
+Instant EFT, MFI loan transactions, personal transaction history views
+Mobile money integration
+
+Airtel Money and TNM: auto-allocation + reconciliation screens, portal user management, per-provider audit trails
+PayChangu withdrawals, Changu cards/wallets (incl. permanent wallets, card activity log)
+Mobile money charge configuration
+Collections & bulk payments
+
+Collections: institutions, institution accounts, users, services, audit trail
+Bulk payments: institutions, accounts, users, upload processing, transaction records, audit trail
+Named integrations: Clinton Health (batches + transactions), Catholic University student data loader
+Host-to-host (H2H): clients, file types/statuses, processing results, transactions
+Lending
+
+Quick-loan: loan products + product charges
+MFI: loans, transactions, settings, manual intervention actions, micro-loan settings
+UNCDF Credit Scoring Engine — the largest single module: no-collateral alternative-data scorecard. Dynamic product/field/group configuration, per-field JEXL scoring formulas, group weights, 0–1000 score, knockout rules, Red/Amber/Green tiering with Approve / STP Approve / Manual Review / Decline decisions, idempotent submissions, config versioning, a drag-and-drop Formula Builder UI, and a JWT-secured REST API at /lmsAppController for mobile clients
+Bancassurance
+
+Vehicle insurance: providers, products, provider-product premiums, transactions + logs, vehicle makes
+Funeral insurance: products, subscriptions, beneficiaries, transactions
+Cards / POS / switch ("Flex-Bridge")
+
+ISO 8583 configuration: channels, formats, fields, response codes, BINs — plus a bulk format loader and copy-fields-to-new-format tool
+POS: devices, operators, transactions, batches, settlement settings and settlement records
+Merchants and merchant portal audit trail
+ISO 20022 account transactions; FlexCube core-banking client (flexclient), CBS logs, Flex EFT transactions + a scheduled cron
+Channels & messaging
+
+USSD: session simulator (PhoneSim) and log viewer
+SMS in/out, single and bulk SMS senders
+Email with templates
+Reporting
+
+reportlab: a query report builder, report templates, parameter dropdowns, a report engine and viewer, plus configurable dashboards with visualizations
+Security & administration
+
+System users, roles, rights, module/authorization matrix; password rules, reset, change-password
+Maker-checker workflow/authorization engine (Workflowable interface, WorkflowManager, pending-approvals view)
+Audit trails — a general one plus dedicated trails per portal (system user, merchant, Airtel, Clinton Health, collections, bulk payment)
+System settings, service providers + params, third-party entities with activity/transaction logs, online-offline mode toggle
+
+Field app (mobile web)
+
+Authentication & session
+
+Splash with session restore, login, forgot-password
+Biometric unlock (BiometricHelper, onboarding bottom sheet, BiometricAuthUseCase)
+Offline login — CheckOfflineAvailabilityUseCase allows sign-in against cached credentials when there's no server
+Server-reachability probe (CheckServerAvailabilityUseCase → /ping), JWT via AuthInterceptor, centralized AuthErrorManager
+Switchable environment/base URL at runtime (EnvironmentRepository + DynamicBaseUrlInterceptor) — dev/UAT/prod switching
+Credentials in an encrypted store backed by the device keystore
+Home / dashboard
+
+Summary stat cards, recent-activity list, overflow menu
+Offline help documentation with browsable topics (HelpScreen, HelpTopic)
+Network status via ConnectivityManagerNetworkMonitor
+Product selection
+
+Hierarchical loan-product browser mirroring the server's parent/child product tree, with breadcrumb navigation and search
+Products cached locally and version-checked against getCurrentProductVersion — only re-syncs when the server config version changes
+Dynamic loan application form — the heart of the app
+
+Renders a form entirely from server-defined ProductField config, so the scorecard can change without an app release
+Field renderers: text, numeric, decimal, dropdown, multi-select, GPS location, document, image
+Local validation engine (FormValidator) mirroring the server's rules — mandatory checks, numeric parsing, GPS format, option membership
+Draft save/load/delete with form snapshots (SaveDraftUseCase, DraftFieldValueEntity)
+Attachments: capture, compress (ImageUtils), store, delete
+GPS capture via Play Services location, with a LocationSettingsManager to prompt for location enablement
+Submission success screen
+Loan portfolio & decisions
+
+Officer's assigned application list with filtering, works offline off the local Room DB
+Application detail view, and a decision screen showing the score result — ScoreBreakdown parses the server's per-group scoring JSON
+Approve / decline use cases
+Offline-first sync engine
+
+Room database (15 entities, 15 DAOs, versioned migrations) as the source of truth
+SubmissionSyncWorker on WorkManager for background upload of queued applications and attachments
+Dedicated sync screens (SyncScreen, DataSyncScreen) with per-item status, plus SyncLogEntity and SyncHealth for diagnostics
+SyncStatus states matching the requirements doc's Pending / In-Progress / Completed / Failed indicators
+Local audit logging of user actions (AuditLogRepository)
+Device registration/identity (DeviceManager, Device entity)
+Two gaps worth flagging
+README.md here is a formal requirements spec (REQ-MOBILE-001…024), so it's easy to check against:
+
+REQ-MOBILE-014 (AES-256 for local data) is only half done. EncryptedCredentialStore protects credentials via the keystore, but there is no SQLCipher dependency anywhere — the Room database holding KYC data, photos and GPS is stored unencrypted.
+REQ-MOBILE-016 (signature capture) looks unwired. SignatureEntity and SignatureDao exist, but nothing outside core/database references them — no capture UI, no repository.
+
+Full Explanation
+
+Reaching the Unbanked: A Field-to-Core Lending Platform
+The problem: Malawi's rural population — smallholder farmers, small traders, first-time borrowers — has no credit history. Traditional collateral-based lending shuts them out, and sending loan officers to remote areas with paper forms is slow, error-prone, and impossible to audit or scale.
+
+The solution: An end-to-end digital lending platform built specifically for that reality, in production for Centenary Bank Malawi.
+
+How it works
+In the field, a loan officer carries an Android app that works with zero connectivity. They walk to a farm, capture the applicant's identity, household, and business data through a guided step-by-step wizard, take geotagged photos, record a GPS-verified location, and complete a signature — all stored securely on the device. No signal required. When the officer's phone reconnects — back at a trading center, in town, wherever — the application syncs automatically in the background.
+
+At the bank, that submission hits a credit-scoring engine that replaces the one thing rural borrowers don't have: a credit history. Instead of requiring collateral or a bureau file, it scores the applicant on alternative data — household stability, business viability, verified location, behavioral signals — using a configurable, auditable scorecard. The decision comes back in seconds: auto-approve, decline, or route to a human for manual review.
+
+One platform, one system of record. The same core banking platform that runs this loan product also runs the bank's entire mobile money and digital channel business — bill payments, mobile wallets, merchant payments, card switching, USSD banking, SMS banking, and full back-office administration with maker-checker controls and audit trails. This isn't a bolted-on pilot; it's a module in a production banking system already processing real transaction volume.
+
+Why this matters at the C-suite level
+New revenue the bank cannot currently capture. Every unbanked household with viable income is a customer competitors also can't reach with traditional underwriting. This is how you originate that loan volume without adding branches.
+
+Risk configured, not hard-coded. The scoring rules — what data matters, how it's weighted, where the approval cutoffs sit — are configuration, not code. Credit policy can be tuned by product and by market condition without an engineering release cycle or app store deployment. That's a materially faster response to portfolio performance than a typical core-banking change request.
+
+Built for the infrastructure that actually exists in rural Malawi. Offline-first isn't a feature checkbox — it's the only way this works, since connectivity is unreliable exactly where the target customers live. The alternative is officers with paper forms and manual data entry, which is what your competitors who don't have this are running.
+
+Auditability and control from day one. Every score, every approval, every officer action is logged. GPS and photo evidence with EXIF metadata make fraud materially harder. Encrypted local storage plus device-level identity protects both customer data and the bank's compliance posture.
+
+Full loan lifecycle in one place — application, scoring, decision, and it runs alongside the bank's existing mobile money, collections, bill payment, and card infrastructure — this is not a point solution that will need to be re-integrated later. It's already part of the core stack.
+
+The one-line pitch: A phone can now underwrite what a bank branch never could — turning the absence of a credit file from a rejection into a scoring input, and doing it fully offline, fully auditable, at the point where the customer actually
